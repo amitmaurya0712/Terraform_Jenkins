@@ -1,6 +1,7 @@
 pipeline{
     agent any
     parameters {
+        booleanParam(name: 'plan', defaultValue: true, description: 'Whether to run a Terraform plan')
         choice(name: 'Action', choices: ['apply', 'destroy'], description: 'Select the terraform action')
         string(name: 'environment', defaultValue: 'default', description: 'Workspace/environment file to use for deployment')
         // string(name: 'version', defaultValue: '', description: 'Version variable to pass to Terraform')
@@ -17,6 +18,9 @@ pipeline{
         }
 
         stage("Initialising the provider"){
+             when {
+               expression { params.plan }
+            }
            steps{
             sh "terraform init"
             sh "terraform plan -input=false -out tfplan "
@@ -24,6 +28,9 @@ pipeline{
         }
 
         stage("Terraform Actions"){
+        when {
+           expression { !params.plan }
+        }
           steps{
             sh "(terraform ${params.Action} --auto-approve)"
           }
