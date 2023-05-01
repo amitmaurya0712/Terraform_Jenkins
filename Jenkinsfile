@@ -1,6 +1,7 @@
 pipeline{
     agent any
     parameters {
+        boolean(name: 'Plan', choices: ['apply', 'plan', 'destroy'], description: 'Select the terraform action')
         choice(name: 'Action', choices: ['apply', 'plan', 'destroy'], description: 'Select the terraform action')
         }
     environment {
@@ -18,6 +19,12 @@ pipeline{
            steps{
             sh "terraform init"
            }
+        }
+
+        stage("Plan"){
+            steps{
+                sh "terraform plan"
+            }
         }
 
         stage("Terraform Actions"){
