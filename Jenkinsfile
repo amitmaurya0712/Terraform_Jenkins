@@ -1,6 +1,7 @@
 pipeline{
     agent any
     parameters {
+        booleanParam(name: 'init', defaultValue: true, description: 'Whether to run a Terraform plan')
         booleanParam(name: 'plan', defaultValue: true, description: 'Whether to run a Terraform plan')
         booleanParam(name: 'apply', defaultValue: true, description: 'Whether to apply or destroy the Terraform configuration')
         booleanParam(name: 'destroy', defaultValue: true, description: 'Whether to apply or destroy the Terraform configuration')
@@ -21,11 +22,14 @@ pipeline{
 
         stage("Initialising the provider"){
              when {
-               expression { params.plan }
+               expression { params.init ||params.plan }
             }
            steps{
+            if (params.init){
             sh "terraform init"
+            } else if (params.plan){
             sh "terraform plan -input=false -out tfplan "
+            }
            }
         }
 
