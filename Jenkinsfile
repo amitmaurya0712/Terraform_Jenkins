@@ -21,16 +21,18 @@ pipeline{
         }
 
         stage("Initialising the provider"){
-             when {
-               expression { params.init || params.plan }
+          when {
+              expression { params.init || params.plan }
             }
            steps{
+              script{
             if (params.init) {
                sh "terraform init"
             } else if (params.plan){
             sh "terraform plan -input=false -out tfplan "
             }
            }
+          } 
         }
 
     stage('Terraform Apply') {
