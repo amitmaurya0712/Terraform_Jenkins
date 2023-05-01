@@ -2,7 +2,8 @@ pipeline{
     agent any
     parameters {
         booleanParam(name: 'plan', defaultValue: true, description: 'Whether to run a Terraform plan')
-        choice(name: 'Action', choices: ['apply', 'destroy'], description: 'Select the terraform action')
+        booleanPram(name: 'apply', defaultValue: true, description: 'Select the terraform action')
+        booleanPram(name: 'destroy', defaultValue: true, description: 'Select the terraform action')
         string(name: 'environment', defaultValue: 'default', description: 'Workspace/environment file to use for deployment')
         // string(name: 'version', defaultValue: '', description: 'Version variable to pass to Terraform')
         }
@@ -32,7 +33,16 @@ pipeline{
            expression { !params.plan }
         }
           steps{
-            sh "(terraform ${params.Action} --auto-approve)"
+            sh "(terraform ${params.apply} --auto-approve)"
+          }
+        } 
+
+        stage("Terraform Actions"){
+        when {
+           expression { !params.plan }
+        }
+          steps{
+            sh "(terraform ${params.destroy} --auto-approve)"
           }
         }   
     }
