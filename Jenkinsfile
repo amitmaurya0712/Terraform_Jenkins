@@ -20,9 +20,10 @@ pipeline{
            }
         }
 
-        stage("Terraform Actions")
+        stage("Terraform Actions"){
           steps{
             sh "(terraform ${Action} --auto-approve)"
-          }   
+          }
+        }   
     }
 }
