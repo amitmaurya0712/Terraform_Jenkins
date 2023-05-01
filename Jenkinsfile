@@ -6,19 +6,19 @@ pipeline{
     stages{
         stage("Checkout"){
             steps{
-                "checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/amitmaurya0712/Terraform_Jenkins.git']])"
+               git branch: 'main', url: 'https://github.com/amitmaurya0712/Terraform_Jenkins.git'
             }
         }
 
-        stage("Initialising the provider"){
-           steps{
-            sh "terraform init"
-           }
-        }
+        // stage("Initialising the provider"){
+        //    steps{
+        //     sh "terraform init"
+        //    }
+        // }
 
-        stage("Terraform Actions")
-          steps{
-            sh "(terraform ${Action} --auto-approve)"
-          }   
+        // stage("Terraform Actions")
+        //   steps{
+        //     sh "(terraform ${Action} --auto-approve)"
+        //   }   
     }
 }
