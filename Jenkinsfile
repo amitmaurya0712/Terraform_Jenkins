@@ -28,7 +28,7 @@ pipeline{
            }
         }
 
-        stage("Terraform Actions"){
+        stage("Terraform Apply"){
         when {
            expression { !params.plan }
         }
@@ -37,7 +37,7 @@ pipeline{
           }
         } 
 
-        stage("Terraform Actions"){
+        stage("Terraform Destroy"){
         when {
            expression { !params.plan }
         }
