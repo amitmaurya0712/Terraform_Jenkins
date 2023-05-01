@@ -22,7 +22,7 @@ pipeline{
 
         stage("Terraform Actions"){
           steps{
-            sh "(terraform ${Action} -input=false -auto-approve)"
+            sh "(terraform ${params.Action} -input=false -auto-approve)"
           }
         }   
     }
