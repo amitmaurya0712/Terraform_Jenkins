@@ -25,8 +25,8 @@ pipeline{
                expression { params.init || params.plan }
             }
            steps{
-            if (params.init){
-            sh "terraform init"
+            if (params.init) {
+               sh "terraform init"
             } else if (params.plan){
             sh "terraform plan -input=false -out tfplan "
             }
