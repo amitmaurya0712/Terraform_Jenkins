@@ -3,6 +3,7 @@ pipeline{
     parameters {
         booleanParam(name: 'plan', defaultValue: true, description: 'Whether to run a Terraform plan')
         booleanParam(name: 'apply', defaultValue: true, description: 'Whether to apply or destroy the Terraform configuration')
+        booleanParam(name: 'destroy', defaultValue: true, description: 'Whether to apply or destroy the Terraform configuration')
         // choice(name: 'Action', choices: ['apply', 'destroy'], description: 'Select the terraform action')
         // string(name: 'environment', defaultValue: 'default', description: 'Workspace/environment file to use for deployment')
         // string(name: 'version', defaultValue: '', description: 'Version variable to pass to Terraform')
@@ -28,7 +29,7 @@ pipeline{
            }
         }
 
-    stage('Terraform Apply/Destroy') {
+    stage('Terraform Apply') {
       when {
         expression { params.apply || params.destroy }
       }    
