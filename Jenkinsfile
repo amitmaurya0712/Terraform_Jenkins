@@ -1,7 +1,7 @@
 pipeline{
     agent any
     parameters {
-        choice(name: 'Action', choices: ['Apply', 'Plan', 'Destroy'], description: 'Select the terraform action')
+        choice(name: 'Action', choices: ['apply', 'plan', 'destroy'], description: 'Select the terraform action')
         }
     environment {
         AWS_ACCESS_KEY_ID     = credentials('AWS_ACCESS_KEY_ID')
