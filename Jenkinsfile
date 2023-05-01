@@ -19,7 +19,7 @@ pipeline{
         stage("Initialising the provider"){
            steps{
             sh "terraform init"
-            sh "terraform plan -input=false -out tfplan -var 'version=${params.version}'" --var-file=environments/${params.environment}.tfvars"
+            sh "terraform plan -input=false -out tfplan -var 'version=${params.version}'" --var-file=${params.environment}.tfvars"
            }
         }
 
