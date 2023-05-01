@@ -10,6 +10,7 @@ resource "aws_db_instance" "default" {
   instance_class              = "db.t3.micro"
   manage_master_user_password = true
   username                    = "admin"
+  apply_immediately           = "true"
   parameter_group_name        = aws_db_parameter_group.default.name 
   skip_final_snapshot         = "true"
 }
