@@ -22,7 +22,7 @@ pipeline{
 
         stage("Initialising the provider"){
              when {
-               expression { params.init ||params.plan }
+               expression { params.init || params.plan }
             }
            steps{
             if (params.init){
