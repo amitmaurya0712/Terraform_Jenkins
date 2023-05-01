@@ -3,6 +3,10 @@ pipeline{
     parameters {
         choice(name: 'Action', choices: ['Apply', 'Plan', 'Destroy'], description: 'Select the terraform action')
         }
+    environment {
+        AWS_ACCESS_KEY_ID     = credentials('AWS_ACCESS_KEY_ID')
+        AWS_SECRET_ACCESS_KEY = credentials('AWS_SECRET_ACCESS_KEY')
+    }
     stages{
         stage("Checkout"){
             steps{
@@ -10,15 +14,15 @@ pipeline{
             }
         }
 
-        // stage("Initialising the provider"){
-        //    steps{
-        //     sh "terraform init"
-        //    }
-        // }
+        stage("Initialising the provider"){
+           steps{
+            sh "terraform init"
+           }
+        }
 
-        // stage("Terraform Actions")
-        //   steps{
-        //     sh "(terraform ${Action} --auto-approve)"
-        //   }   
+        stage("Terraform Actions")
+          steps{
+            sh "(terraform ${Action} --auto-approve)"
+          }   
     }
 }
