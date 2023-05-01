@@ -6,5 +6,5 @@ resource "aws_db_instance" "default" {
   instance_class              = "db.t3.micro"
   manage_master_user_password = true
   username                    = "admin"
-  parameter_group_name        = "default:mysql-8-0"
+  parameter_group_name        = "default.mysql-8-0"
 }
