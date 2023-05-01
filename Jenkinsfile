@@ -2,8 +2,8 @@ pipeline{
     agent any
     parameters {
         booleanParam(name: 'plan', defaultValue: true, description: 'Whether to run a Terraform plan')
-        booleanPram(name: 'apply', defaultValue: true, description: 'Select the terraform action')
-        booleanPram(name: 'destroy', defaultValue: true, description: 'Select the terraform action')
+        booleanParam(name: 'apply', defaultValue: true, description: 'Select the terraform action')
+        booleanParam(name: 'destroy', defaultValue: true, description: 'Select the terraform action')
         string(name: 'environment', defaultValue: 'default', description: 'Workspace/environment file to use for deployment')
         // string(name: 'version', defaultValue: '', description: 'Version variable to pass to Terraform')
         }
