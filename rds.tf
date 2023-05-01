@@ -11,4 +11,5 @@ resource "aws_db_instance" "default" {
   manage_master_user_password = true
   username                    = "admin"
   parameter_group_name        = aws_db_parameter_group.default.name 
+  skip_final_snapshot         = "false"
 }
