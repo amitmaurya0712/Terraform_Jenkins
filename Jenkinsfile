@@ -29,9 +29,6 @@ pipeline{
             if (params.init) {
                sh "terraform init"
                echo "Terraform Initialisation executed"
-              else{
-                echo "Terraform init is skipped"
-              }
             } else if (params.plan){
                 sh "terraform plan -input=false -out tfplan "
                 echo "Terraform Plan is executed."
@@ -51,10 +48,11 @@ pipeline{
             script {
               if (params.apply) {
                   sh "terraform apply -input=false -auto-approve"
-                  // echo "terraform apply is skipped"
               } else if (params.destroy) {
                   sh "terraform destroy -input=false -auto-approve"
-                  // echo "terraform destory is skipped" 
+                else{
+                  echo "Terraform plan is skipped"
+              }
               }
             }
           }
