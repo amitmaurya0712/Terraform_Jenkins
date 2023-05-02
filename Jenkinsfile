@@ -18,39 +18,41 @@ pipeline{
         }
 
         stage("Initialising the provider"){
-          when {
-              expression { params.init || params.plan }
+            when {
+                expression { params.init || params.plan }
             }
-           steps{
-              script{
-                if (params.init) {
-                  sh "terraform init"
-                  echo "Terraform init stage is completed."
-                } else if (params.plan){
-                  sh "terraform plan -input=false -out tfplan "
-                  echo "Terraform Plan is skipped."
+            steps{
+                script{
+                    if (params.init) {
+                        sh "terraform init"
+                        echo "Terraform init completed."
+                    } else if (params.plan){
+                        sh "terraform plan -input=false -out tfplan "
+                        echo "Terraform plan completed."
+                    } else {
+                        echo "Initialising the provider stage skipped."
+                    }
                 }
-              }
-          } 
+            } 
         }
 
         stage('Terraform Apply') {
-          when {
-            expression { params.apply || params.destroy }
-          }    
-          steps {
-            script {
-              if (params.apply) {
-                sh "terraform apply -input=false -auto-approve"
-                echo "Terraform Apply stage is completed."
-              } else if (params.destroy) {
-                sh "terraform destroy -input=false -auto-approve"
-                echo "Terraform Destroy stage is completed." 
-              } else {
-                echo "Terraform Apply stage is skipped."
-              }
+            when {
+                expression { params.apply || params.destroy }
+            }    
+            steps {
+                script {
+                    if (params.apply) {
+                        sh "terraform apply -input=false -auto-approve"
+                        echo "Terraform apply completed."
+                    } else if (params.destroy) {
+                        sh "terraform destroy -input=false -auto-approve"
+                        echo "Terraform destroy completed." 
+                    } else {
+                        echo "Terraform Apply stage skipped."
+                    }
+                }
             }
-          }
         }
-      }
     }  
+}
