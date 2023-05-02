@@ -22,15 +22,16 @@ pipeline{
 
         stage("Initialising the provider"){
           when {
-              expression { params.init && params.plan }
+              expression { params.init || params.plan }
             }
            steps{
               script{
             if (params.init) {
                sh "terraform init"
+               echo "This plan is skipped"
             } else if (params.plan){
-            sh "terraform plan -input=false -out tfplan "
-            echo "Terraform Plan is skipped."
+                  sh "terraform plan -input=false -out tfplan "
+                  echo "Terraform Plan is skipped."
             }
            }
           } 
@@ -38,16 +39,16 @@ pipeline{
 
     stage('Terraform Apply') {
       when {
-        expression { params.apply && params.destroy }
+        expression { params.apply || params.destroy }
       }    
       steps {
             script {
               if (params.apply) {
-                sh "terraform apply -input=false -auto-approve"
-                echo "terraform apply is skipped"
+                  sh "terraform apply -input=false -auto-approve"
+                  echo "terraform apply is skipped"
               } else if (params.destroy) {
-                sh "terraform destroy -input=false -auto-approve"
-                echo "terraform destory is skipped" 
+                  sh "terraform destroy -input=false -auto-approve"
+                  echo "terraform destory is skipped" 
               }
             }
           }
