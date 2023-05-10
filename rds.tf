@@ -1,16 +1,31 @@
-resource "aws_db_parameter_group" "default" {
-  name   = "rds-pg"
-  family = "mysql8.0"
+
+
+resource "aws_key_pair" "TF_key" {
+
+  key_name   = "TF_key"
+
+  public_key = tls_private_key.rsa.public_key_openssh
+
 }
-resource "aws_db_instance" "default" {
-  allocated_storage           = 10
-  db_name                     = "SimpleJenkinsDB"
-  engine                      = "MySQL"
-  engine_version              = "8.0.32"
-  instance_class              = "db.t3.micro"
-  manage_master_user_password = true
-  username                    = "admin"
-  apply_immediately           = "true"
-  parameter_group_name        = aws_db_parameter_group.default.name 
-  skip_final_snapshot         = "true"
+
+ 
+
+resource "tls_private_key" "rsa" {
+
+  algorithm = "RSA"
+
+  rsa_bits  = 4096
+
 }
+
+ 
+
+resource "local_file" "TF-key" {
+
+    content  = tls_private_key.rsa.private_key_pem
+
+    filename = "tfkey"
+
+}
+
+
